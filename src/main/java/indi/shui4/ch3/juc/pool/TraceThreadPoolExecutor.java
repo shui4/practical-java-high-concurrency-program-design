@@ -44,6 +44,19 @@ public class TraceThreadPoolExecutor extends ThreadPoolExecutor {
     super(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue, threadFactory, handler);
   }
 
+  public static void main(String[] args) {
+    TraceThreadPoolExecutor poolExecutor =
+        new TraceThreadPoolExecutor(
+            0, Integer.MAX_VALUE, 0L, TimeUnit.SECONDS, new SynchronousQueue<>());
+    for (int i = 0; i < 10; i++) {
+      final int finalI = i;
+      poolExecutor.execute(
+          () -> {
+            System.out.println(100 / finalI);
+          });
+    }
+  }
+
   @Override
   public void execute(Runnable command) {
     super.execute(wrap(command, clientTrace(), Thread.currentThread().getName()));
@@ -52,10 +65,6 @@ public class TraceThreadPoolExecutor extends ThreadPoolExecutor {
   @Override
   public Future<?> submit(Runnable task) {
     return super.submit(wrap(task, clientTrace(), Thread.currentThread().getName()));
-  }
-
-  private Exception clientTrace() {
-    return new Exception("Client stack trace");
   }
 
   private Runnable wrap(Runnable task, Exception clientStack, String clientThreadName) {
@@ -69,16 +78,7 @@ public class TraceThreadPoolExecutor extends ThreadPoolExecutor {
     };
   }
 
-  public static void main(String[] args) {
-    TraceThreadPoolExecutor poolExecutor =
-        new TraceThreadPoolExecutor(
-            0, Integer.MAX_VALUE, 0L, TimeUnit.SECONDS, new SynchronousQueue<>());
-    for (int i = 0; i < 10; i++) {
-      final int finalI = i;
-      poolExecutor.execute(
-          () -> {
-            System.out.println(100 / finalI);
-          });
-    }
+  private Exception clientTrace() {
+    return new Exception("Client stack trace");
   }
 }
