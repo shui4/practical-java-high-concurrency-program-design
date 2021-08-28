@@ -22,64 +22,64 @@ import java.util.concurrent.TimeUnit;
 @State(Scope.Benchmark)
 public class ListBenchmark {
 
-  ConcurrentLinkedQueue<Object> bigConcurrentLinkedQueue = new ConcurrentLinkedQueue<>();
-  CopyOnWriteArrayList<Object> bigCopyOnWriteArrayList = new CopyOnWriteArrayList<>();
-  ConcurrentLinkedQueue<Object> smallConcurrentLinkedQueue = new ConcurrentLinkedQueue<>();
-  CopyOnWriteArrayList<Object> smallCopyOnWriteArrayList = new CopyOnWriteArrayList<>();
+  ConcurrentLinkedQueue<Object> bigConcurrentList = new ConcurrentLinkedQueue<>();
+  CopyOnWriteArrayList<Object> bigCopyOnWriteList = new CopyOnWriteArrayList<>();
+  ConcurrentLinkedQueue<Object> smallConcurrentList = new ConcurrentLinkedQueue<>();
+  CopyOnWriteArrayList<Object> smallCopyOnWriteList = new CopyOnWriteArrayList<>();
 
   @Benchmark
   public void concurrentListGet() {
-    smallConcurrentLinkedQueue.peek();
+    smallConcurrentList.peek();
   }
 
   @Benchmark
   public void concurrentListSize() {
-    smallConcurrentLinkedQueue.size();
+    smallConcurrentList.size();
   }
 
   @Benchmark
   public void copyOnWriteGet() {
-    smallCopyOnWriteArrayList.get(0);
+    smallCopyOnWriteList.get(0);
   }
 
   @Benchmark
   public void copyOnWriteSize() {
-    smallCopyOnWriteArrayList.size();
+    smallCopyOnWriteList.size();
   }
 
   @Setup
   public void setup() {
     for (int i = 0; i < 10; i++) {
-      smallCopyOnWriteArrayList.add(new Object());
-      smallConcurrentLinkedQueue.add(new Object());
+      smallCopyOnWriteList.add(new Object());
+      smallConcurrentList.add(new Object());
     }
     for (int i = 0; i < 1000; i++) {
-      bigCopyOnWriteArrayList.add(new Object());
-      bigConcurrentLinkedQueue.add(new Object());
+      bigCopyOnWriteList.add(new Object());
+      bigConcurrentList.add(new Object());
     }
   }
 
   @Benchmark
-  public void smallCopyOnWrite() {
-    smallCopyOnWriteArrayList.add(new Object());
-    smallCopyOnWriteArrayList.remove(0);
+  public void smallCopyOnWriteWrite() {
+    smallCopyOnWriteList.add(new Object());
+    smallCopyOnWriteList.remove(0);
   }
 
   @Benchmark
   public void smallConcurrentListWrite() {
-    smallConcurrentLinkedQueue.add(new Object());
-    smallConcurrentLinkedQueue.remove(0);
+    smallConcurrentList.add(new Object());
+    smallConcurrentList.remove(0);
   }
 
   @Benchmark
   public void bigCopyOnWrite() {
-    bigCopyOnWriteArrayList.add(new Object());
-    bigCopyOnWriteArrayList.remove(0);
+    bigCopyOnWriteList.add(new Object());
+    bigCopyOnWriteList.remove(0);
   }
 
   @Benchmark
   public void bigConcurrentListWrite() {
-    bigConcurrentLinkedQueue.add(new Object());
-    bigConcurrentLinkedQueue.remove(0);
+    bigConcurrentList.add(new Object());
+    bigConcurrentList.remove(0);
   }
 }
