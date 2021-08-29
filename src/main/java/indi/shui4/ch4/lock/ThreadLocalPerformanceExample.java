@@ -15,8 +15,7 @@ public class ThreadLocalPerformanceExample {
   private static ExecutorService exe = Executors.newFixedThreadPool(THREAD_COUNT);
 
   private static Random rnd = new Random();
-  private static ThreadLocal<Random> tRnd =
-      ThreadLocal.withInitial(() -> new Random(123));
+  private static ThreadLocal<Random> tRnd = ThreadLocal.withInitial(() -> new Random(123));
 
   public static class RndTask implements Callable<Long> {
     private int mode;
@@ -39,9 +38,7 @@ public class ThreadLocalPerformanceExample {
     public Long call() {
       long b = System.currentTimeMillis();
       for (int i = 0; i < GET_COUNT; i++) {
-        Objects
-            .requireNonNull(getRandom())
-            .nextInt();
+        Objects.requireNonNull(getRandom()).nextInt();
       }
       long e = System.currentTimeMillis();
       long spend = e - b;
@@ -60,6 +57,7 @@ public class ThreadLocalPerformanceExample {
     for (int i = 0; i < THREAD_COUNT; i++) {
       totaltime += futs[i].get();
     }
+    // 15137ms
     System.out.println("多线程访问同一个Random实例：" + totaltime + "ms");
 
     for (int i = 0; i < THREAD_COUNT; i++) {
@@ -69,6 +67,7 @@ public class ThreadLocalPerformanceExample {
     for (int i = 0; i < THREAD_COUNT; i++) {
       totaltime += futs[i].get();
     }
+    // 577ms
     System.out.println("使用ThreadLocal包装Random实例：" + totaltime + "ms");
     exe.shutdown();
   }
