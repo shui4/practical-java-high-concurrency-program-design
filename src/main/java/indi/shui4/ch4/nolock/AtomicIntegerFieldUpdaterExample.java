@@ -9,22 +9,9 @@ import java.util.concurrent.atomic.AtomicIntegerFieldUpdater;
  */
 public class AtomicIntegerFieldUpdaterExample {
 
-  /** 候选人 */
-  private static class Candidate {
-    int id;
-    /**
-     * 使用FiledUpdater需要满足以下条件 <br>
-     * <li>必须是volatile，否则报错：IllegalArgumentException: Must be volatile type
-     * <li>不能是私有的
-     * <li>不能是类变量（static）
-     */
-    public volatile int score;
-  }
-
+  private static final AtomicInteger allScore = new AtomicInteger(0);
   private static final AtomicIntegerFieldUpdater<Candidate> scoreUpdater =
       AtomicIntegerFieldUpdater.newUpdater(Candidate.class, "score");
-
-  private static AtomicInteger allScore = new AtomicInteger(0);
 
   public static void main(String[] args) throws InterruptedException {
     Candidate candidate = new Candidate();
@@ -47,5 +34,17 @@ public class AtomicIntegerFieldUpdaterExample {
 
     System.out.println("score=" + candidate.score);
     System.out.println("allScore=" + allScore);
+  }
+
+  /** 候选人 */
+  private static class Candidate {
+    /**
+     * 使用FiledUpdater需要满足以下条件 <br>
+     * <li>必须是volatile，否则报错：IllegalArgumentException: Must be volatile type
+     * <li>不能是私有的
+     * <li>不能是类变量（static）
+     */
+    public volatile int score;
+    int id;
   }
 }
