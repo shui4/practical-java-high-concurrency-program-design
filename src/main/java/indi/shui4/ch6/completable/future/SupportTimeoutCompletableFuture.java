@@ -13,8 +13,21 @@ public class SupportTimeoutCompletableFuture {
 
   @SneakyThrows
   public static void main(String[] args) {
-    CompletableFuture<Integer> future = CompletableFuture
-        .supplyAsync(
+
+    /* CompletableFuture<Integer> integerCompletableFuture = CompletableFuture
+    .supplyAsync(
+        () -> {
+          try {
+            TimeUnit.SECONDS.sleep(2);
+          } catch (InterruptedException e) {
+          }
+          return calc(50);
+        })
+    //jdk9
+    .orTimeout(1, TimeUnit.SECONDS);*/
+
+    CompletableFuture<Integer> future =
+        CompletableFuture.supplyAsync(
             () -> {
               try {
                 TimeUnit.SECONDS.sleep(2);
@@ -22,7 +35,7 @@ public class SupportTimeoutCompletableFuture {
               }
               return calc(50);
             });
-    future.get(1,TimeUnit.SECONDS);
+    future.get(1, TimeUnit.SECONDS);
   }
 
   public static Integer calc(Integer para) {
