@@ -8,7 +8,7 @@ import java.util.concurrent.locks.LockSupport;
 import java.util.concurrent.locks.StampedLock;
 
 /**
- * 参考：{@link UnsafePark }理解 {@link Unsafe#park(boolean, long)}的特性
+ * 请先看：{@link UnsafePark }理解 {@link Unsafe#park(boolean, long)}的特性
  *
  * @author shui4
  * @since 1.0
