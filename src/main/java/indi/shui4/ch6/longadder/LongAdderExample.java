@@ -1,10 +1,7 @@
 package indi.shui4.ch6.longadder;
 
-import com.sun.xml.internal.ws.assembler.dev.TubelineAssemblyContextUpdater;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
-import org.w3c.dom.CDATASection;
-import sun.util.resources.mt.CalendarData_mt;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
